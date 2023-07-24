@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/pico.min.css' %}">
+    <title>
+      {% block title %}
+        Push
+      {% endblock title %}
+    </title>
+  </head>
+  <body>
+    <header class="container">
+      <nav>
+        <ul>
+          <li>
+            <a href="{% url 'pages:home' %}">Push</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main class="container">
+      {% block content %}
+      {% endblock content %}
+    </main>
+    <footer class="container">
+      <a href="#">About</a>
+    </footer>
+  </body>
+</html>
