@@ -29,6 +29,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    # third-party apps
+    "allauth",
+    "allauth.account",
     # local apps
     "apps.pages.apps.PagesConfig",
     "apps.accounts.apps.AccountsConfig",
@@ -64,6 +68,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+# djnago-allauth config
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = "pages:home"
+ACCOUNT_LOGOUT_REDIRECT = "pages:home"
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+ACCOUNT_FORMS = {
+    "signup": "apps.accounts.forms.CustomUserCreationForm",
+}
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
