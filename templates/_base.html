@@ -19,6 +19,33 @@
             <a href="{% url 'pages:home' %}">Push</a>
           </li>
         </ul>
+        <ul>
+          {% if user.is_authenticated %}
+            <li>
+              <details role="list" dir="rtl">
+                <summary aria-haspopup="listbox" role="link">Welcome, {{ user.first_name }}</summary>
+                <ul role="listbox">
+                  <li>
+                    <a href="{% url 'accounts:update' %}">Edit Info</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'account_change_password' %}">Change Password</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'account_logout' %}">Logout</a>
+                  </li>
+                </ul>
+              </details>
+            </li>
+          {% else %}
+            <li>
+              <a href="{% url 'account_login' %}">Login</a>
+            </li>
+            <li>
+              <a href="{% url 'account_signup' %}">Sign Up</a>
+            </li>
+          {% endif %}
+        </ul>
       </nav>
     </header>
     <main class="container">
