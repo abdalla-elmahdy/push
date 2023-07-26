@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+{% block title %}
+  {{ project.title|truncatechars:50 }}
+{% endblock title %}
+{% block content %}
+  <section>
+    <h2>{{ project.title }}</h2>
+    <p>Updated: {{ project.updated }}</p>
+    <p>Created: {{ project.created }}</p>
+    <hr>
+    <div>
+      <p>Looking for: {{ project.get_open_for_display }}</p>
+      <p>Time estimated to finish: Few {{ project.get_time_estimate_display }}</p>
+    </div>
+    <p>{{ project.description }}</p>
+    {% if project.repo_url %}<p>Repo url: {{ project.repo_url }}</p>{% endif %}
+  </section>
+  <aside>
+    <h3>About the project owner</h3>
+    <p>Name: {{ project.owner.first_name }} {{ project.owner.last_name }}</p>
+    <p>Level of Experience: {{ project.owner.get_status_display }}</p>
+    <span>Bio:</span>
+    <p>{{ project.owner.bio }}</p>
+  </aside>
+{% endblock %}
