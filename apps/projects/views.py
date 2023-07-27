@@ -1,17 +1,20 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import CreateView, DetailView
+from django.views import generic
 
 from .forms import ProjectForm
 from .models import Project
 
+CustomUser = get_user_model()
 
-class ProjectDetailView(DetailView):
+
+class ProjectDetailView(generic.DetailView):
     """
     Displays details of an individual project instance and its owner
     Context:
         - project: an instance of Project model
-    Template used: project/detail.html
+    Template used: projects/detail.html
 
     """
 
@@ -21,12 +24,12 @@ class ProjectDetailView(DetailView):
     template_name = "projects/detail.html"
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     """
     Creates a new instance of Project and set its owner to current logged in user
     Context:
         - form: an instance of ProjectForm form
-    Template used: project/create.html
+    Template used: projects/create.html
     """
 
     model = Project
@@ -39,3 +42,18 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+
+class MyProjectsListView(LoginRequiredMixin, generic.ListView):
+    """
+    Displays a list of the logged-in user's created projects
+    Context:
+        - project_list: iterable of the logged-in user's created projects
+    Template name: projects/my_projects.html
+    """
+
+    context_object_name = "project_list"
+    template_name = "projects/my_projects.html"
+
+    def get_queryset(self):
+        return CustomUser.objects.get(id=self.request.user.id).projects.all()
