@@ -113,3 +113,26 @@ class ProjectsTests(TestCase):
         )
         self.assertEquals(response.status_code, 403)
         self.assertNotEquals(self.project.title, "Alice's Project")
+
+    # delete view tests
+    def test_only_owner_can_delete_project(self):
+        self.client.force_login(self.alice)
+        response = self.client.post(
+            reverse("projects:delete", args=[self.project.id]),
+        )
+        self.assertEquals(response.status_code, 403)
+        self.assertEquals(Project.objects.count(), 1)
+
+    def test_project_delete_view_get(self):
+        self.client.force_login(self.user)
+        response = self.client.get(
+            reverse("projects:delete", args=[str(self.project.id)])
+        )
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, "projects/delete.html")
+
+    def test_project_delete_view_post(self):
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("projects:delete", args=[self.project.id]))
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(Project.objects.count(), 0)
