@@ -11,6 +11,11 @@ urlpatterns = [
         name="create",
     ),
     path(
+        "update/<uuid:pk>/",
+        views.ProjectUpdateView.as_view(),
+        name="update",
+    ),
+    path(
         "<uuid:pk>",
         views.ProjectDetailView.as_view(),
         name="detail",

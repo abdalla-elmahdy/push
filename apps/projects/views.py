@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views import generic
 
 from .forms import ProjectForm
+from .mixins import OwnerRequiredMixin
 from .models import Project
 
 CustomUser = get_user_model()
@@ -57,3 +58,22 @@ class MyProjectsListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return CustomUser.objects.get(id=self.request.user.id).projects.all()
+
+
+class ProjectUpdateView(OwnerRequiredMixin, LoginRequiredMixin, generic.UpdateView):
+    """
+    Updates an instance of Project model using ProjectForm that has the current user as owner
+    Uses the instance's pk passed in the url path to retrieve it from DB
+    Context:
+        - project: the instance of project the user wants to update
+        - form: an instance of ProjectForm
+    Template used: projects/update.html
+    """
+
+    model = Project
+    form_class = ProjectForm
+    template_name = "projects/update.html"
+    context_object_name = "project"
+
+    def get_success_url(self):
+        return reverse("projects:detail", args=[str(self.object.id)])
