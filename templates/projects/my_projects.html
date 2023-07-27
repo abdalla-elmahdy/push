@@ -11,6 +11,7 @@
           <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
         </h2>
         <a href="{% url 'projects:update' project.id %}" role="button">Edit Project</a>
+        <a href="{% url 'projects:delete' project.id %}" role="button">Delete Project</a>
       </article>
     {% endfor %}
   {% else %}

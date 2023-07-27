@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from .forms import ProjectForm
@@ -77,3 +77,10 @@ class ProjectUpdateView(OwnerRequiredMixin, LoginRequiredMixin, generic.UpdateVi
 
     def get_success_url(self):
         return reverse("projects:detail", args=[str(self.object.id)])
+
+
+class ProjectDeleteView(OwnerRequiredMixin, LoginRequiredMixin, generic.DeleteView):
+    model = Project
+    context_object_name = "project"
+    template_name = "projects/delete.html"
+    success_url = reverse_lazy("projects:my_projects")
