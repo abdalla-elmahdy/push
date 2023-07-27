@@ -22,9 +22,15 @@
         <ul>
           {% if user.is_authenticated %}
             <li>
+              <a href="{% url 'projects:create' %}" role="button">Add Project</a>
+            </li>
+            <li>
               <details role="list" dir="rtl">
                 <summary aria-haspopup="listbox" role="link">Welcome, {{ user.first_name }}</summary>
                 <ul role="listbox">
+                  <li>
+                    <a href="{% url 'projects:my_projects' %}">My Projects</a>
+                  </li>
                   <li>
                     <a href="{% url 'accounts:update' %}">Edit Info</a>
                   </li>
