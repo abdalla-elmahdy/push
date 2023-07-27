@@ -12,7 +12,8 @@ CustomUser = get_user_model()
 
 class ProjectDetailView(generic.DetailView):
     """
-    Displays details of an individual project instance and its owner
+    Get:
+        Displays details of an individual project instance and its owner
     Context:
         - project: an instance of Project model
     Template used: projects/detail.html
@@ -27,7 +28,10 @@ class ProjectDetailView(generic.DetailView):
 
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     """
-    Creates a new instance of Project and set its owner to current logged in user
+    Get:
+        Displays an instance of Project form
+    Post:
+        Creates a new instance of Project and set its owner to current logged in user
     Context:
         - form: an instance of ProjectForm form
     Template used: projects/create.html
@@ -47,7 +51,8 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
 
 class MyProjectsListView(LoginRequiredMixin, generic.ListView):
     """
-    Displays a list of the logged-in user's created projects
+    Get:
+        Displays a list of the logged-in user's created projects
     Context:
         - project_list: iterable of the logged-in user's created projects
     Template name: projects/my_projects.html
@@ -62,8 +67,12 @@ class MyProjectsListView(LoginRequiredMixin, generic.ListView):
 
 class ProjectUpdateView(OwnerRequiredMixin, LoginRequiredMixin, generic.UpdateView):
     """
-    Updates an instance of Project model using ProjectForm that has the current user as owner
     Uses the instance's pk passed in the url path to retrieve it from DB
+    Get:
+        Displays an instance ProjectForm model populated with the instance's data
+    Post:
+        Updates an instance of Project model using ProjectForm that has the current user as owner,
+        otherwise returns 403 response
     Context:
         - project: the instance of project the user wants to update
         - form: an instance of ProjectForm
@@ -80,6 +89,14 @@ class ProjectUpdateView(OwnerRequiredMixin, LoginRequiredMixin, generic.UpdateVi
 
 
 class ProjectDeleteView(OwnerRequiredMixin, LoginRequiredMixin, generic.DeleteView):
+    """
+    Uses the instance's pk passed in the url path to retrieve it from DB
+    Get:
+        Displays a confirmation form to delete the instance or cancel
+    Post:
+        Deletes the instance if the current user as owner, otherwise returns 403 response
+    """
+
     model = Project
     context_object_name = "project"
     template_name = "projects/delete.html"
