@@ -1,9 +1,18 @@
 from django.urls import path
 
-from .views import ProjectDetailView
+from . import views
 
 app_name = "projects"
 
 urlpatterns = [
-    path("<uuid:pk>", ProjectDetailView.as_view(), name="detail"),
+    path(
+        "create/",
+        views.ProjectCreateView.as_view(),
+        name="create",
+    ),
+    path(
+        "<uuid:pk>",
+        views.ProjectDetailView.as_view(),
+        name="detail",
+    ),
 ]
