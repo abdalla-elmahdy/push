@@ -9,7 +9,7 @@
   </section>
   <article>
     <h2>Search For Your Next Learning Project</h2>
-    <form action="" method="get" class="grid">
+    <form action="{% url 'projects:search' %}" method="get" class="grid">
       {{ form.as_p }}
       <div>
         <p></p>

@@ -11,6 +11,11 @@ urlpatterns = [
         name="create",
     ),
     path(
+        "search/",
+        views.ProjectSearchView.as_view(),
+        name="search",
+    ),
+    path(
         "update/<uuid:pk>/",
         views.ProjectUpdateView.as_view(),
         name="update",
