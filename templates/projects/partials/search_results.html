@@ -1,12 +1,10 @@
-<section>
+<section id="search_results">
   {% if project_list %}
     {% for project in project_list %}
       <article>
         <h3>
           <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
         </h3>
-        <p>{{ project.get_open_for_disply }}</p>
-        <p>{{ project.get_time_estimate_disply }}</p>
       </article>
     {% endfor %}
   {% else %}

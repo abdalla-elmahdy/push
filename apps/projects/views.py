@@ -41,8 +41,7 @@ class ProjectSearchView(generic.ListView):
                 time_estimate=time_estimate,
                 search=query,
             )
-
-        return results
+            return results
 
 
 class ProjectDetailView(generic.DetailView):

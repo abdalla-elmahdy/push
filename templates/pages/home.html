@@ -9,12 +9,21 @@
   </section>
   <article>
     <h2>Search For Your Next Learning Project</h2>
-    <form action="{% url 'projects:search' %}" method="get" class="grid">
-      {{ form.as_p }}
-      <div>
-        <p></p>
-        <input type="submit" value="Search">
+    <form hx-get="{% url 'projects:search' %}"
+          hx-swap="outerHTML"
+          hx-trigger="submit"
+          hx-target="#search_results"
+          method="get">
+      <div class="grid">
+        {{ form.as_p }}
+        <div>
+          <p></p>
+          <input type="submit" value="Search">
+        </div>
       </div>
+      <progress class="htmx-indicator"></progress>
     </form>
+    <section id="search_results">
+    </section>
   </article>
 {% endblock content %}
