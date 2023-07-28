@@ -3,6 +3,18 @@
   Home
 {% endblock title %}
 {% block content %}
-  <h1>Find Your Next Learning Partner</h1>
-  <p>The best way to learn is not to do it alone.</p>
+  <section>
+    <h1>Find Your Next Learning Partner</h1>
+    <p>The best way to learn is not to do it alone.</p>
+  </section>
+  <article>
+    <h2>Search For Your Next Learning Project</h2>
+    <form action="" method="get" class="grid">
+      {{ form.as_p }}
+      <div>
+        <p></p>
+        <input type="submit" value="Search">
+      </div>
+    </form>
+  </article>
 {% endblock content %}
