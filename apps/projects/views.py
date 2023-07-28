@@ -1,13 +1,47 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.postgres.search import SearchVector
 from django.urls import reverse, reverse_lazy
 from django.views import generic
+
+from apps.pages.forms import SearchForm
 
 from .forms import ProjectForm
 from .mixins import OwnerRequiredMixin
 from .models import Project
 
 CustomUser = get_user_model()
+
+
+class ProjectSearchView(generic.ListView):
+    """
+    Get:
+        displays a set of project instances found in the DB
+        based on the parameters passed
+    Context:
+        project_list: iterable of project instances found
+    Template used:
+        - projects/partials/search_results.html (rendered in the homepage using htmx)
+    """
+
+    model = Project
+    context_object_name = "project_list"
+    template_name = "projects/partials/search_results.html"
+
+    def get_queryset(self):
+        form = SearchForm(self.request.GET)
+        if form.is_valid():
+            query = form.cleaned_data["query"]
+            open_for = form.cleaned_data["open_for"]
+            time_estimate = form.cleaned_data["time_estimate"]
+            results = Project.objects.annotate(
+                search=SearchVector("title", "description")
+            ).filter(
+                open_for=open_for,
+                time_estimate=time_estimate,
+                search=query,
+            )
+            return results
 
 
 class ProjectDetailView(generic.DetailView):

@@ -1,0 +1,13 @@
+<section id="search_results">
+  {% if project_list %}
+    {% for project in project_list %}
+      <article>
+        <h3>
+          <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+        </h3>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>Sorry no projects were found that match your criterea.</p>
+  {% endif %}
+</section>
