@@ -31,10 +31,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install requirements
         run: pip install -r requirements/ci.txt
-      - name: Make migartions for accounts
-        run: python manage.py makemigrations acounts
-      - name: Make migrations for projects
-        run: python manage.py makemigrations projects
+      - name: Make migartions
+        run: python manage.py makemigrations
       - name: Migrate
         run: python manage.py migrate
       - name: Run Tests
