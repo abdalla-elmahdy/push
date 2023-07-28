@@ -4,11 +4,20 @@ on: [pull_request, push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.ci
     services:
       postgres:
         image: postgres:13
         ports:
           - 5432:5432
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       matrix:
         python-version: ["3.10"]
@@ -22,7 +31,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install requirements
         run: pip install -r requirements/ci.txt
+      - name: Make migartions
+        run: python manage.py makemigrations
+      - name: Migrate
+        run: python manage.py migrate
       - name: Run Tests
-        env:
-          DJANGO_SETTINGS_MODULE: config.settings.ci
         run: python manage.py test
