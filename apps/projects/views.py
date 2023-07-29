@@ -3,11 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.postgres.search import SearchVector
 from django.urls import reverse, reverse_lazy
 from django.views import generic
+from utils.mixins import OwnerRequiredMixin
 
 from apps.pages.forms import SearchForm
 
 from .forms import ProjectForm
-from .mixins import OwnerRequiredMixin
 from .models import Project
 
 CustomUser = get_user_model()
