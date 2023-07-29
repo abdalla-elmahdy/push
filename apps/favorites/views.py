@@ -2,10 +2,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.utils import IntegrityError
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import DeleteView, ListView
 
 from apps.projects.models import Project
+from utils.mixins import OwnerRequiredMixin
 
 from .forms import FavoriteForm
 from .models import Favorite
@@ -46,3 +48,18 @@ class FavoriteListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Favorite.objects.filter(owner=self.request.user)
+
+
+class FavoriteDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
+    """
+    Uses the instance's pk passed in the url path to retrieve it from DB
+    Get:
+        Displays a confirmation form to delete the instance or cancel
+    Post:
+        Deletes the instance if the current user as owner, otherwise returns 403 response
+    """
+
+    model = Favorite
+    context_object_name = "favorite"
+    template_name = "favorites/partials/delete.html"
+    success_url = reverse_lazy("projects:my_projects")

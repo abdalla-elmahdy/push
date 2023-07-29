@@ -3,9 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.postgres.search import SearchVector
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from utils.mixins import OwnerRequiredMixin
 
 from apps.pages.forms import SearchForm
+from utils.mixins import OwnerRequiredMixin
 
 from .forms import ProjectForm
 from .models import Project

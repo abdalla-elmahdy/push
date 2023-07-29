@@ -5,6 +5,10 @@
       <h3>
         <a href="{{ favorite.project.get_absolute_url }}">{{ favorite.project.title }}</a>
       </h3>
+      <a hx-get="{% url 'favorites:delete' favorite.id %}"
+         hx-target="#main-content"
+         hx-swap="innerHTML"
+         hx-trigger="click">Delete</a>
     </article>
   {% endfor %}
 {% else %}
