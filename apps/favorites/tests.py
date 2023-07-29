@@ -44,6 +44,7 @@ class FavoritesTests(TransactionTestCase):
             project=cls.project,
         )
 
+    # Create view tests
     def test_favorite_create_view(self):
         self.client.force_login(self.user)
         data = {
@@ -61,3 +62,29 @@ class FavoritesTests(TransactionTestCase):
         response = self.client.post(reverse("favorites:create"), data)
         self.assertEqual(Favorite.objects.count(), 1)
         self.assertContains(response, "Already added to your favorites")
+
+    # delete view tests
+    def test_only_owner_can_delete_favorite(self):
+        # user is the malicious one in this test not alice
+        self.client.force_login(self.user)
+        response = self.client.post(
+            reverse("favorites:delete", args=[self.alice_favorite.id]),
+        )
+        self.assertEquals(response.status_code, 403)
+        self.assertEquals(Favorite.objects.count(), 1)
+
+    def test_favorite_delete_view_get(self):
+        self.client.force_login(self.alice)
+        response = self.client.get(
+            reverse("favorites:delete", args=[str(self.alice_favorite.id)])
+        )
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, "favorites/partials/delete.html")
+
+    def test_favorite_delete_view_post(self):
+        self.client.force_login(self.alice)
+        response = self.client.post(
+            reverse("favorites:delete", args=[self.alice_favorite.id])
+        )
+        self.assertEquals(response.status_code, 302)
+        self.assertEquals(Favorite.objects.count(), 0)
