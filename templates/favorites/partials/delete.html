@@ -1,0 +1,10 @@
+<article>
+  <h2>
+    Are you sure you want to delete <strong>{{ favorite.project.title }}</strong> from your favorites?
+  </h2>
+  <form action="{% url 'favorites:delete' favorite.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+    <a href="{% url 'favorites:list' %}">Cancel</a>
+  </form>
+</article>

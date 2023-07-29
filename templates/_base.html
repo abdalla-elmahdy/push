@@ -14,7 +14,7 @@
       {% endblock title %}
     </title>
   </head>
-  <body>
+  <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <header class="container">
       <nav>
         <ul>
@@ -33,6 +33,12 @@
                 <ul role="listbox">
                   <li>
                     <a href="{% url 'projects:my_projects' %}">My Projects</a>
+                  </li>
+                  <li>
+                    <a hx-get="{% url 'favorites:list' %}"
+                       hx-target="#main-content"
+                       hx-swap="innerHTML"
+                       hx-trigger="click"><span class="htmx-indicator" aria-busy="true"></span> My Favorites</a>
                   </li>
                   <li>
                     <a href="{% url 'accounts:update' %}">Edit Info</a>
@@ -57,7 +63,7 @@
         </ul>
       </nav>
     </header>
-    <main class="container">
+    <main class="container" id="main-content">
       {% block content %}
       {% endblock content %}
     </main>

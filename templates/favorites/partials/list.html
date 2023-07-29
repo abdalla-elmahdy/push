@@ -1,0 +1,16 @@
+<h2>My Favorites</h2>
+{% if favorite_list %}
+  {% for favorite in favorite_list %}
+    <article>
+      <h3>
+        <a href="{{ favorite.project.get_absolute_url }}">{{ favorite.project.title }}</a>
+      </h3>
+      <a hx-get="{% url 'favorites:delete' favorite.id %}"
+         hx-target="#main-content"
+         hx-swap="innerHTML"
+         hx-trigger="click">Delete</a>
+    </article>
+  {% endfor %}
+{% else %}
+  <p>You haven't added any projects to your favorites yet.</p>
+{% endif %}

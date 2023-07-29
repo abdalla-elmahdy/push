@@ -5,9 +5,9 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from apps.pages.forms import SearchForm
+from utils.mixins import OwnerRequiredMixin
 
 from .forms import ProjectForm
-from .mixins import OwnerRequiredMixin
 from .models import Project
 
 CustomUser = get_user_model()
