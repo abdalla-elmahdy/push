@@ -3,6 +3,7 @@ from django.db.utils import IntegrityError
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
+from django.views.generic import ListView
 
 from apps.projects.models import Project
 
@@ -30,3 +31,18 @@ class FavoriteCreateView(LoginRequiredMixin, View):
         # because of the unique_together constraint in Favorite model
         except IntegrityError:
             return HttpResponse("Already added to your favorites")
+
+
+class FavoriteListView(LoginRequiredMixin, ListView):
+    """
+    Displays a list of all projects in a user's favorites
+    Context:
+        - favorite_list: iterable of favorite instances
+    """
+
+    model = Favorite
+    template_name = "favorites/partials/list.html"
+    context_object_name = "favorite_list"
+
+    def get_queryset(self):
+        return Favorite.objects.filter(owner=self.request.user)

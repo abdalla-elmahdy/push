@@ -1,0 +1,12 @@
+<h2>My Favorites</h2>
+{% if favorite_list %}
+  {% for favorite in favorite_list %}
+    <article>
+      <h3>
+        <a href="{{ favorite.project.get_absolute_url }}">{{ favorite.project.title }}</a>
+      </h3>
+    </article>
+  {% endfor %}
+{% else %}
+  <p>You haven't added any projects to your favorites yet.</p>
+{% endif %}
