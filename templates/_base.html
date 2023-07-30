@@ -41,6 +41,12 @@
                        hx-trigger="click"><span class="htmx-indicator" aria-busy="true"></span> My Favorites</a>
                   </li>
                   <li>
+                    <a hx-get="{% url 'proposals:list' %}"
+                       hx-target="#main-content"
+                       hx-swap="innerHTML"
+                       hx-trigger="click"><span class="htmx-indicator" aria-busy="true"></span> Received Proposals</a>
+                  </li>
+                  <li>
                     <a href="{% url 'accounts:update' %}">Edit Info</a>
                   </li>
                   <li>

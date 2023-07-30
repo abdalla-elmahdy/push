@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views import View
+from django.views.generic import ListView
 
 from apps.projects.models import Project
 
@@ -30,3 +31,16 @@ class ProposalCreateView(LoginRequiredMixin, View):
             return HttpResponse("Proposal sent successfully")
 
         return HttpResponse("Something went wrong, try again.")
+
+
+class ProposalListView(ListView):
+    """
+    Displays a list of proposals received for the logged-in user
+    """
+
+    model = Proposal
+    context_object_name = "proposal_list"
+    template_name = "proposals/partials/list.html"
+
+    def get_queryset(self):
+        return Proposal.objects.filter(project__owner=self.request.user)

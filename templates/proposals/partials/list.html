@@ -1,0 +1,25 @@
+<h2>Received Proposals</h2>
+{% if proposal_list %}
+  {% for proposal in proposal_list %}
+    <details>
+      <summary>Proposal by: {{ proposal.sender.first_name }} For: {{ proposal.project.title|truncatechars:50 }}</summary>
+      <p>
+        Motive:
+        <br>
+        {{ proposal.motive }}
+      </p>
+      <p>
+        Skillset:
+        <br>
+        {{ proposal.skillset }}
+      </p>
+      <p>
+        Contact Details:
+        <br>
+        {{ proposal.contact_details }}
+      </p>
+    </details>
+  {% endfor %}
+{% else %}
+  <p>You haven't received proposals yet.</p>
+{% endif %}
