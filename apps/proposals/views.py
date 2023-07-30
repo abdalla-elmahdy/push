@@ -1,10 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import DeleteView, ListView
 
 from apps.projects.models import Project
+from utils.mixins import OwnerRequiredMixin
 
 from .forms import ProposalForm
 from .models import Proposal
@@ -44,3 +46,18 @@ class ProposalListView(ListView):
 
     def get_queryset(self):
         return Proposal.objects.filter(project__owner=self.request.user)
+
+
+class ProposalDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
+    """
+    Uses the instance's pk passed in the url path to retrieve it from DB
+    Get:
+        Displays a confirmation form to delete the instance or cancel
+    Post:
+        Deletes the instance if the current user as owner, otherwise returns 403 response
+    """
+
+    model = Proposal
+    context_object_name = "proposal"
+    template_name = "proposals/partials/delete.html"
+    success_url = reverse_lazy("pages:home")

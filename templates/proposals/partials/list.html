@@ -18,6 +18,10 @@
         <br>
         {{ proposal.contact_details }}
       </p>
+      <a hx-get="{% url 'proposals:delete' proposal.id %}"
+         hx-target="#main-content"
+         hx-swap="innerHTML"
+         hx-trigger="click">Delete</a>
     </details>
   {% endfor %}
 {% else %}
