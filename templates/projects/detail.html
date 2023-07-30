@@ -26,11 +26,17 @@
   {% if user.is_authenticated and project.owner != user %}
     <article>
       <h3>Wish to be a part of my project?</h3>
-      <form action="">
+      <form hx-post="{% url 'proposals:create' %}"
+            hx-swap="innerHTML"
+            hx-trigger="submit"
+            hx-target="#proposal-result"
+            method="post">
         {% csrf_token %}
         <input type="hidden" name="project_id" value="{{ project.id }}">
         {{ proposal_form.as_p }}
         <input type="submit" value="Send">
+        <p class="htmx-indicator" aria-busy="true">Please wait</p>
+        <p id="proposal-result"></p>
       </form>
     </article>
   {% endif %}
