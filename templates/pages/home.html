@@ -1,11 +1,25 @@
 {% extends '_base.html' %}
+{% load static %}
 {% block title %}
   Home
 {% endblock title %}
 {% block content %}
-  <section>
-    <h1>Find Your Next Learning Partner</h1>
-    <p>The best way to learn is not to do it alone.</p>
+  <section class="grid">
+    <div>
+      <h1>Find Your Next Learning Opportunity</h1>
+      <p>
+        The best way to learn is not to do it alone.
+        Push can help you find other learners with shared goals,
+        so you can make your learning journey a bit more pleasant.
+      </p>
+      {% if user.is_authenticated != True %}
+        <a href="{% url 'account_signup' %}" role="button">Sign Up</a>
+      {% endif %}
+    </div>
+    <div>
+      <img src="{% static 'images/hero.svg' %}"
+           alt="2 engineers working together">
+    </div>
   </section>
   <article>
     <h2>Search For Your Next Learning Project</h2>
