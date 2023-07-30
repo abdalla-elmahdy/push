@@ -62,4 +62,4 @@ class FavoriteDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
     model = Favorite
     context_object_name = "favorite"
     template_name = "favorites/partials/delete.html"
-    success_url = reverse_lazy("projects:my_projects")
+    success_url = reverse_lazy("pages:home")

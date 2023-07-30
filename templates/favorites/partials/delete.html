@@ -5,6 +5,6 @@
   <form action="{% url 'favorites:delete' favorite.id %}" method="post">
     {% csrf_token %}
     <input type="submit" value="Delete">
-    <a href="{% url 'projects:list' %}">Cancel</a>
+    <a href="{% url 'pages:home' %}">Cancel</a>
   </form>
 </article>
