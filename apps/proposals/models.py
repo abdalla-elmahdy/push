@@ -7,17 +7,15 @@ CustomUser = get_user_model()
 
 
 class Proposal(models.Model):
-    """ """
+    """
+    Stores a single entry of a proposl
+    Has a many to one relationships with CustomUser and Project
+    """
 
     sender = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
         related_name="proposals_sent",
-    )
-    owner = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        related_name="proposals_received",
     )
     project = models.ForeignKey(
         Project,
@@ -31,3 +29,9 @@ class Proposal(models.Model):
 
     class Meta:
         ordering = ["-created"]
+
+    @property
+    def owner(self):
+        # This exist so we can use OwnerRequiredMixin
+        # for views that lets users manage proposals they receive
+        return self.project.owner
