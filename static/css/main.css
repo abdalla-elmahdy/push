@@ -46,3 +46,20 @@ h2,
 h3 {
   font-family: "Montserrat", sans-serif;
 }
+
+/* Header Styles */
+@media only screen and (prefers-color-scheme: dark) {
+  .light-theme-logo {
+    display: none;
+  }
+}
+
+@media only screen and (prefers-color-scheme: light) {
+  .dark-theme-logo {
+    display: none;
+  }
+}
+
+.logo {
+  width: 8rem;
+}

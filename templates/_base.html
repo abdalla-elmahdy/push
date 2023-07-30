@@ -24,7 +24,14 @@
       <nav>
         <ul>
           <li>
-            <a href="{% url 'pages:home' %}">Push</a>
+            <a href="{% url 'pages:home' %}">
+              <img src="{% static 'images/Push-logos_white.png' %}"
+                   alt="Push's logo"
+                   class="dark-theme-logo logo">
+              <img src="{% static 'images/Push-logos_black.png' %}"
+                   alt="Push's logo"
+                   class="light-theme-logo logo">
+            </a>
           </li>
         </ul>
         <ul>
@@ -34,7 +41,7 @@
             </li>
             <li>
               <details role="list" dir="rtl">
-                <summary aria-haspopup="listbox" role="link">Welcome, {{ user.first_name }}</summary>
+                <summary aria-haspopup="listbox" role="link">Welcome {{ user.first_name }}</summary>
                 <ul role="listbox">
                   <li>
                     <a href="{% url 'projects:my_projects' %}">My Projects</a>
@@ -65,10 +72,10 @@
             </li>
           {% else %}
             <li>
-              <a href="{% url 'account_login' %}">Login</a>
+              <a href="{% url 'account_login' %}" role="button" class="secondary">Login</a>
             </li>
             <li>
-              <a href="{% url 'account_signup' %}">Sign Up</a>
+              <a href="{% url 'account_signup' %}" role="button">Sign Up</a>
             </li>
           {% endif %}
         </ul>
