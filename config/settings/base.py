@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "apps.accounts.apps.AccountsConfig",
     "apps.projects.apps.ProjectsConfig",
     "apps.favorites.apps.FavoritesConfig",
+    "apps.proposals.apps.ProposalsConfig",
 ]
 
 MIDDLEWARE = [
