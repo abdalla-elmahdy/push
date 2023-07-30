@@ -5,6 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from apps.pages.forms import SearchForm
+from apps.proposals.forms import ProposalForm
 from utils.mixins import OwnerRequiredMixin
 
 from .forms import ProjectForm
@@ -50,13 +51,16 @@ class ProjectDetailView(generic.DetailView):
         Displays details of an individual project instance and its owner
     Context:
         - project: an instance of Project model
+        - proposal_form: an instance of ProposalForm
     Template used: projects/detail.html
 
     """
 
     model = Project
     context_object_name = "project"
-    template_name = "projects/detail.html"
+    extra_context = {
+        "proposal_form": ProposalForm(),
+    }
     template_name = "projects/detail.html"
 
 
