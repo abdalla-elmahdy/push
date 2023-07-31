@@ -29,7 +29,7 @@ EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-STATICFILES_STORAGE = 'core.azure_storage.AzureStaticStorage'
+STATICFILES_STORAGE = 'config.azure_storage.AzureStaticStorage'
 
 AZURE_ACCOUNT_NAME = config("AZURE_ACCOUNT_NAME")
 AZURE_ACCOUNT_KEY = config("AZURE_ACCOUNT_KEY")
