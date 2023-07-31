@@ -1,0 +1,25 @@
+<section id="search_results">
+  {% if project_list %}
+    {% for project in project_list %}
+      <article>
+        <h3>
+          <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+        </h3>
+        <p id="favorited-{{ project.id }}"></p>
+        <form hx-post="{% url 'favorites:create' %}"
+              hx-swap="innerHTML"
+              hx-trigger="submit"
+              hx-target="#favorited-{{ project.id }}"
+              method="post">
+          <input type="hidden" name="id" value="{{ project.id }}">
+          <input type="submit"
+                 class="contrast outline"
+                 role="button"
+                 value="Add to favorites">
+        </form>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>Sorry no projects were found that match your criterea.</p>
+  {% endif %}
+</section>

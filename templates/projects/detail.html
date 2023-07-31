@@ -1,0 +1,55 @@
+{% extends "_base.html" %}
+{% block title %}
+  {{ project.title|truncatechars:50 }}
+{% endblock title %}
+{% block content %}
+  <article>
+    <h2>{{ project.title }}</h2>
+    <p>Updated: {{ project.updated }}</p>
+    <p>Created: {{ project.created }}</p>
+    <hr>
+    <div>
+      <p>
+        Looking for:
+        <br>
+        {{ project.get_open_for_display }}
+      </p>
+      <p>
+        Time estimated to finish:
+        <br>
+        Few {{ project.get_time_estimate_display }}
+      </p>
+    </div>
+    <p>
+      Details:
+      <br>
+      {{ project.description }}
+    </p>
+    {% if project.repo_url %}<p>Repo url: {{ project.repo_url }}</p>{% endif %}
+  </article>
+  <aside>
+    <h3>About the project owner</h3>
+    <p>Name: {{ project.owner.first_name }} {{ project.owner.last_name }}</p>
+    <p>Level of Experience: {{ project.owner.get_status_display }}</p>
+    <span>Bio:</span>
+    <p>{{ project.owner.bio }}</p>
+  </aside>
+  <!--Project proposal form-->
+  {% if user.is_authenticated and project.owner != user %}
+    <article>
+      <h3>Wish to be a part of my project?</h3>
+      <form hx-post="{% url 'proposals:create' %}"
+            hx-swap="innerHTML"
+            hx-trigger="submit"
+            hx-target="#proposal-result"
+            method="post">
+        {% csrf_token %}
+        <input type="hidden" name="project_id" value="{{ project.id }}">
+        {{ proposal_form.as_p }}
+        <input type="submit" value="Send">
+        <p class="htmx-indicator" aria-busy="true">Please wait</p>
+        <p id="proposal-result"></p>
+      </form>
+    </article>
+  {% endif %}
+{% endblock %}

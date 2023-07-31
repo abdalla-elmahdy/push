@@ -1,0 +1,10 @@
+<article>
+  <h2>
+    Are you sure you want to delete <strong>{{ proposal.sender.first_name }}'s proposal</strong>?
+  </h2>
+  <form action="{% url 'proposals:delete' proposal.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+    <a href="{% url 'pages:home' %}">Cancel</a>
+  </form>
+</article>
