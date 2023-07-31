@@ -4,7 +4,7 @@ from .base import *
 
 SECRET_KEY = config("DJANGO_SECRET_KEY")
 
-DEBUG = config(DJANGO_DEBUG)
+DEBUG = config("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(" ")
 CSRF_COOKIE_SECURE = True
