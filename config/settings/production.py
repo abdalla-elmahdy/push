@@ -4,7 +4,7 @@ from .base import *
 
 SECRET_KEY = config("DJANGO_SECRET_KEY")
 
-DEBUG = False
+DEBUG = config(DJANGO_DEBUG)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(" ")
 CSRF_COOKIE_SECURE = True
@@ -28,3 +28,12 @@ EMAIL_HOST_USER = config("EMAIL")
 EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+STATICFILES_STORAGE = 'core.azure_storage.AzureStaticStorage'
+
+AZURE_ACCOUNT_NAME = config("AZURE_ACCOUNT_NAME")
+AZURE_ACCOUNT_KEY = config("AZURE_ACCOUNT_KEY")
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
